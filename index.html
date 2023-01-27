@@ -5,24 +5,54 @@
   <title></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <div id="app">
-    {{ message }}
+<body class="bg-zinc-900 text-zinc-50 h-screen">
+  <div id="app" class="h-full">
+    <p v-if="characterList.length === 0">
+      <img src="https://cdn3.emoji.gg/emojis/5960_NotLikeThis.png" alt="NotLikeThis Twitch Emote">
+    </p>
+    <div class="flex justify-center items-center h-full">
+      <ul class="flex flex-col">
+        <li v-for="character in characterList" class="text-center">
+          {{ character.name}}
+          <div>
+            <img :src="character.image" :alt="character">
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
     // options API
-    const {createApp} = Vue
-    const app = createApp({
-      data() {
-        return {
-          message: "Howdy Partner"
-        }
-      }
-    })
-    app.mount("#app")
+    Vue.createApp({
+      data: () => ({
+        characterList: [
+          {
+            name: "Jinx",
+            image: "https://static.wikia.nocookie.net/leagueoflegends/images/9/90/Jinx_Arcane_6_Render.png"
+          },
+          {
+            name: "Vi",
+            image: "https://static.wikia.nocookie.net/leagueoflegends/images/8/85/Vi_Arcane_4_Render.png"
+          },
+          {
+            name: "Ekko",
+            image: "https://static.wikia.nocookie.net/leagueoflegends/images/d/de/Ekko_Arcane_4_Render.png"
+          },
+          {
+            name: "Caitlyn",
+            image: "https://static.wikia.nocookie.net/leagueoflegends/images/0/04/Caitlyn_Arcane_6_Render.png"
+          },
+          {
+            name: "Viktor",
+            image: "https://static.wikia.nocookie.net/leagueoflegends/images/3/33/Viktor_Arcane_2_Render.png"
+          },
+        ]
+      })
+    }).mount("#app")
   </script>
 
 </body>
