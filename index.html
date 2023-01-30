@@ -18,9 +18,9 @@
         <li v-for="character in characterList" class="text-center text-lg">
           {{ character.name}}
           <div class="">
-            <img :src="character.image" :alt="character" class="object-cover h-40 w-40 rounded-sm border border-2 border-zinc-400">
+            <img :src="character.image" :alt="character" class="object-cover h-40 w-40 rounded-sm border border-2 border-rose-400">
           </div>
-          <button @click="favoriteCharacter(character)" class="bg-zinc-500 p-2 m-1 rounded-sm hover:bg-zinc-600">
+          <button @click="favoriteCharacter(character)" class="bg-zinc-500 p-2 mt-4 rounded-sm hover:bg-zinc-600">
              Favorite
           </button>
         </li>
@@ -29,7 +29,7 @@
         <p v-if="favoriteCharacterList.length === 0">No Favorites</p>
         <ul class="flex">
           <li v-for="favoriteCharacter in favoriteCharacterList">
-            <button @click="removeCharacter(favoriteCharacter)" class="bg-zinc-500 p-2 rounded-sm m-1">
+            <button @click="removeCharacter(favoriteCharacter)" class="bg-zinc-500 p-2 rounded-sm m-1 hover:bg-red-400">
               {{favoriteCharacter.name}}
             </button>
           </li>
