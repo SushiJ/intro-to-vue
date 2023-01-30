@@ -1,47 +1,75 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script >
+export default {
+  data: () => ({
+    characterList: [
+      {
+        name: "Jinx",
+        image: "https://static.wikia.nocookie.net/leagueoflegends/images/9/90/Jinx_Arcane_6_Render.png"
+      },
+      {
+        name: "Vi",
+        image: "https://static.wikia.nocookie.net/leagueoflegends/images/8/85/Vi_Arcane_4_Render.png"
+      },
+      {
+        name: "Ekko",
+        image: "https://static.wikia.nocookie.net/leagueoflegends/images/d/de/Ekko_Arcane_4_Render.png"
+      },
+      {
+        name: "Caitlyn",
+        image: "https://static.wikia.nocookie.net/leagueoflegends/images/0/04/Caitlyn_Arcane_6_Render.png"
+      },
+      {
+        name: "Viktor",
+        image: "https://static.wikia.nocookie.net/leagueoflegends/images/3/33/Viktor_Arcane_2_Render.png"
+      },
+    ],
+    favoriteCharacterList: [],
+  }),
+  methods: {
+    removeCharacter(c) {
+      this.favoriteCharacterList = this.favoriteCharacterList.filter(char => char.name != c.name)
+    },
+    favoriteCharacter(character) {
+      if (this.favoriteCharacterList.includes(character)) {
+        return
+      }
+      this.favoriteCharacterList.push(character)
+    }
+  }
+}
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="bg-zinc-800 text-zinc-50 h-screen">
+    <div id="app" class="h-full">
+      <p v-if="characterList.length === 0">
+        <img src="https://cdn3.emoji.gg/emojis/5960_NotLikeThis.png" alt="NotLikeThis Twitch Emote">
+      </p>
+      <div class="flex justify-center items-center h-full flex-col">
+        <ul class="flex gap-4">
+          <li v-for="character in characterList" class="text-center text-lg">
+            {{ character.name }}
+            <div class="">
+              <img :src="character.image" :alt="character"
+                class="object-cover h-40 w-40 rounded-sm border border-2 border-rose-400">
+            </div>
+            <button @click="favoriteCharacter(character)" class="bg-zinc-500 p-2 mt-4 rounded-sm hover:bg-zinc-600">
+               Favorite
+            </button>
+          </li>
+        </ul>
+        <div class="mt-4 text-lg">
+          <p v-if="favoriteCharacterList.length === 0">No Favorites</p>
+          <ul class="flex">
+            <li v-for="favoriteCharacter in favoriteCharacterList">
+              <button @click="removeCharacter(favoriteCharacter)"
+                class="bg-zinc-500 p-2 rounded-sm m-1 hover:bg-red-400">
+                {{ favoriteCharacter.name }}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
