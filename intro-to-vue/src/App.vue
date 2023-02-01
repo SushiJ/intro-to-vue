@@ -1,5 +1,11 @@
 <script>
+import CharacterCard from './components/CharacterCard.vue'
+import FavoriteList from './components/FavoriteList.vue'
 export default {
+  components: {
+    CharacterCard,
+    FavoriteList
+  },
   data: () => ({
     characterList: [
       {
@@ -26,14 +32,14 @@ export default {
     favoriteCharacterList: [],
   }),
   methods: {
-    removeCharacter(c) {
-      this.favoriteCharacterList = this.favoriteCharacterList.filter(char => char.name != c.name)
+    removeFavorite(payload) {
+      this.favoriteCharacterList = this.favoriteCharacterList.filter(char => char.name != payload.name)
     },
-    favoriteCharacter(character) {
-      if (this.favoriteCharacterList.includes(character)) {
+    addFavorite(payload) {
+      if (this.favoriteCharacterList.includes(payload)) {
         return
       }
-      this.favoriteCharacterList.push(character)
+      this.favoriteCharacterList.push(payload)
     }
   }
 }
@@ -46,26 +52,16 @@ export default {
         <img src="https://cdn3.emoji.gg/emojis/5960_NotLikeThis.png" alt="NotLikeThis Twitch Emote">
       </p>
       <div class="flex justify-center items-center h-full flex-col">
-        <ul class="flex gap-4">
-          <li v-for="character in characterList" class="text-center text-lg">
-            {{ character.name }}
-            <div class="">
-              <img :src="character.image" :alt="character"
-                class="object-cover h-40 w-40 rounded-sm border border-2 border-rose-400">
-            </div>
-            <button @click="favoriteCharacter(character)" class="bg-zinc-500 p-2 mt-4 rounded-sm hover:bg-zinc-600">
-               Favorite
-            </button>
-          </li>
-        </ul>
+        <div class="flex gap-4">
+          <div v-for="character in characterList" class="">
+            <CharacterCard :character="character" @favorite="addFavorite" />
+          </div>
+        </div>
         <div class="mt-4 text-lg">
           <p v-if="favoriteCharacterList.length === 0">No Favorites</p>
           <ul class="flex">
             <li v-for="favoriteCharacter in favoriteCharacterList">
-              <button @click="removeCharacter(favoriteCharacter)"
-                class="bg-zinc-500 p-2 rounded-sm m-1 hover:bg-red-400">
-                {{ favoriteCharacter.name }}
-              </button>
+              <FavoriteList :favoriteCharacter="favoriteCharacter" @removeFavorite="removeFavorite" />
             </li>
           </ul>
         </div>

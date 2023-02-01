@@ -6,8 +6,9 @@
     "cypress.config.*",
     "playwright.config.*"
   ],
-  "allowJs": true,
+  
   "compilerOptions": {
+    "allowJs": true,
     "composite": true,
     "types": ["node"]
   }
